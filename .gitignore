@@ -1,0 +1,27 @@
+# Python
+__pycache__/
+*.py[cod]
+.ipynb_checkpoints/
+
+# Entornos virtuales
+.venv/
+venv/
+env/
+
+# IDE y sistema operativo
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# Variables locales
+.env
+*.env
+
+# Datos y artefactos generados
+data/
+artifacts/
+*.joblib
+*.pkl
+*.npy
+*.npz
