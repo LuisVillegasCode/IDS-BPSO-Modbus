@@ -1,34 +1,99 @@
-# Lightweight IDS para Redes OT: Optimización BPSO-RF para Edge Computing
+# IDS ligero para redes OT con BPSO y Random Forest
 
-Implementación empírica de un Sistema de Detección de Intrusiones (IDS) ligero, diseñado específicamente para entornos de Tecnologías de Operación (OT). Este proyecto propone una arquitectura *wrapper* que integra la Optimización por Enjambre de Partículas Binario (BPSO) y un ensamble Random Forest (RF) para mitigar la "maldición de la dimensionalidad" en el tráfico de red industrial (Modbus/TCP).
+Este repositorio contiene una investigación académica sobre selección de características para sistemas de detección de intrusiones en entornos de Tecnologías de Operación (OT).
 
-El objetivo principal es viabilizar el despliegue de modelos de Inteligencia Artificial en dispositivos perimetrales (Edge) con recursos físicos estrictamente limitados, garantizando la detección de Ataques de Inyección de Datos Falsos (FDIA) en tiempo real.
+La propuesta utiliza Binary Particle Swarm Optimization (BPSO) para reducir la dimensionalidad del tráfico industrial y un clasificador Random Forest para evaluar el impacto de esa selección sobre el desempeño y el costo computacional.
 
-## 🚀 Resultados Clave de Eficiencia Computacional
+## Objetivo
 
-La experimentación controlada sobre el *ICS Cyber Attack Dataset* demostró que el motor de selección BPSO logró un rendimiento óptimo aplicable a la industria:
+El trabajo estudia si una selección de características basada en BPSO puede reducir el número de variables procesadas por un IDS sin perder de forma significativa su capacidad de detección.
 
-* **Compresión Dimensional:** Reducción del **55.47%** del espacio de búsqueda (de 128 a 57 características críticas).
-* **Huella de Hardware (Edge):** Consumo pico de memoria volátil limitado a **2.37 MB**, garantizando escalabilidad en nodos IoT/IIoT industriales.
-* **Latencia de Inferencia:** Tiempo de respuesta ultrabajo de **0.0239 ms** por flujo de red.
-* **Resiliencia Predictiva:** Mantenimiento de una alta asertividad frente a ciberataques con un **F1-Score de 0.9166**.
+El escenario experimental utiliza tráfico asociado a sistemas eléctricos y ataques de inyección de datos falsos (FDIA).
 
-## 📂 Estructura del Repositorio
+## Flujo experimental
 
-* `Paper_BPSO_RF_IDS_OT.pdf`: Documento completo de la investigación científica, que detalla la metodología empírica, formulación matemática y discusión de resultados.
-* `IDS_BPSO_OT_Experiment.ipynb`: Notebook de Google Colab que contiene el código fuente de la investigación, incluyendo el preprocesamiento de datos, implementación de la metaheurística (BPSO) y el perfilamiento de hardware (`tracemalloc`, `psutil`).
-* `referencias/`: Directorio que contiene el material bibliográfico de soporte y referencias de literatura.
+```text
+Dataset de tráfico OT
+        |
+        v
+Limpieza y preprocesamiento
+        |
+        v
+Balanceo del conjunto de entrenamiento
+        |
+        v
+Selección de características con BPSO
+        |
+        v
+Random Forest
+        |
+        v
+Evaluación predictiva y computacional
+```
 
-## 🛠️ Tecnologías y Herramientas
+## Resultados obtenidos
 
-* **Lenguaje:** Python 3
-* **Machine Learning & Enjambre:** `scikit-learn`, `pyswarms`, `imbalanced-learn`
-* **Perfilamiento de Hardware:** `tracemalloc`, `psutil`
-* **Protocolos y Entornos:** Modbus/TCP, Edge Computing, Smart Grids (SCADA)
+En la configuración evaluada se obtuvieron los siguientes resultados:
 
-## ✉️ Contacto
+- Reducción dimensional: 128 a 57 características.
+- Compresión del espacio de entrada: 55.47 %.
+- F1-Score: 0.9166.
+- Latencia de inferencia medida: 0.0239 ms por flujo.
+- Memoria pico reportada durante el perfilamiento: 2.37 MB.
 
-**Luis Javier Villegas Noblecilla**
-Estudiante de Ingeniería de Ciberseguridad
-* [LinkedIn](https://www.linkedin.com/in/luis-javier-villegas-noblecilla-/)
-* [ResearchGate](https://www.researchgate.net/profile/Luis-Villegas-23)
+Estas cifras corresponden al entorno y dataset utilizados en el experimento. No deben interpretarse como garantía de rendimiento en una red OT de producción.
+
+## Contenido del repositorio
+
+- `Luis_Villegas_EP_v1.0.ipynb`: notebook principal del experimento.
+- `Paper_BPSO_RF_IDS_OT.pdf`: documento de investigación con metodología y discusión de resultados.
+- `Referencias/`: bibliografía utilizada como soporte del estudio.
+- `README.md`: resumen técnico del proyecto.
+
+## Tecnologías
+
+- Python
+- pandas
+- NumPy
+- scikit-learn
+- imbalanced-learn
+- pyswarms
+- Matplotlib
+- Seaborn
+- psutil
+- tracemalloc
+
+## Ejecución
+
+El notebook fue preparado para ejecutarse en Google Colab o en un entorno local con Python 3.
+
+Instala las dependencias con:
+
+```bash
+pip install -r requirements.txt
+```
+
+El dataset no se incluye en el repositorio. La ruta de entrada debe ajustarse en el notebook antes de ejecutar el pipeline.
+
+## Aspectos evaluados
+
+El experimento considera tanto métricas de clasificación como indicadores relacionados con eficiencia computacional:
+
+- número de características seleccionadas;
+- porcentaje de reducción dimensional;
+- F1-Score y otras métricas de clasificación;
+- tiempo de entrenamiento;
+- latencia de inferencia;
+- consumo de memoria;
+- comportamiento de convergencia del proceso de selección.
+
+## Limitaciones
+
+El proyecto corresponde a una validación experimental y no a un IDS desplegado en una infraestructura OT real.
+
+Las mediciones de latencia y memoria dependen del entorno de ejecución. Además, el rendimiento observado sobre un dataset específico no garantiza el mismo comportamiento frente a otros protocolos, topologías o familias de ataques.
+
+## Autor
+
+Luis Javier Villegas Noblecilla  
+Estudiante de Ingeniería de Ciberseguridad - Universidad Nacional de Ingeniería
